@@ -5,9 +5,9 @@ import mysql.connector
 mydb = mysql.connector.connect(
     host="localhost",
     user="root",
-    passwd="popolo69",
+    passwd="coucoumartin69",
+    database = "available_sports"
     )
 mycursor = mydb.cursor()
-newdata = str("CREATE DATABASE football")
-mycursor.execute(newdata)
-mydb.commit()
+sql = "DROP DATABASE "+ "americanfootball_nfl"
+mycursor.execute(sql)
