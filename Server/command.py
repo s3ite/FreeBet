@@ -9,5 +9,5 @@ mydb = mysql.connector.connect(
     database = "available_sports"
     )
 mycursor = mydb.cursor()
-sql = "DROP DATABASE "+ "americanfootball_nfl"
+sql = "DROP TABLE "+ "basketball_euroleague"
 mycursor.execute(sql)
