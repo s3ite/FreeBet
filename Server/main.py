@@ -73,6 +73,47 @@ def delete_database(key):
     mydb.commit()
     print("delete database :", key, " at", datetime.datetime.now())
 
+
+def check_match_cote(key):
+    """Check if the cote of the match has changed, if not update the value in the database"""
+    print("check_match_cote function :", datetime.datetime.now())
+    API_KEY = 'b3ef4600cf280cacb0716dedbe740e7b'
+    REGIONS = 'eu'
+    ODDS_FORMAT = 'decimal'
+    DATE_FORMAT = 'iso'
+    MARKETS = 'h2h,spreads'
+    odds_response = requests.get(
+    f'https://api.the-odds-api.com/v4/sports/'+key+'/odds',
+    params={
+        'api_key': API_KEY,
+        'regions': REGIONS,
+        'markets': MARKETS,
+        'oddsFormat': ODDS_FORMAT,
+        'dateFormat': DATE_FORMAT,
+    }
+    )
+    if odds_response.status_code == 200:
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            passwd="coucoumartin69",
+            database = key
+            )
+        mycursor = mydb.cursor()
+        sqlFormula = "SELECT * FROM INFO"
+        mycursor.execute(sqlFormula)
+        myresult = mycursor.fetchall()
+        for match in odds_response.json():
+            for i in range(len(myresult)):
+                if match['id'] == myresult[i][0]: #Si le match est dans la database
+                    if(match['odds']['h2h'][0]['decimal'] != myresult[i][1]):
+                        sql = "UPDATE INFO SET COTE = '"+str(match['odds']['h2h'][0]['decimal'])+"' WHERE ID = '"+str(match['id'])+"'"
+                        mycursor.execute(sql)
+                        mydb.commit()
+                        print("update cote :", match['id'], " at", datetime.datetime.now())
+
+    
+
 def create_database(key):
     print("create_database function :", datetime.datetime.now())
     API_KEY = 'b3ef4600cf280cacb0716dedbe740e7b'
@@ -218,6 +259,7 @@ def start():
         else:
             print("Sport already in database :", key["key"], " at :", datetime.datetime.now())
             check_database_match(key["key"]) #On vérifie si les matchs sont dans la base de données
+            check_match_cote(key["key"]) #On vérifie si les cotes sont à jour dans la base de données
 
 
     print("Every database is created at :", datetime.datetime.now())
