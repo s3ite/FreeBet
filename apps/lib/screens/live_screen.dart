@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class BalanceScreen extends StatefulWidget {
+class LiveScreen extends StatefulWidget {
   @override
-  _BalanceScreenState createState() => _BalanceScreenState();
+  _LiveScreenState createState() => _LiveScreenState();
 }
 
-class _BalanceScreenState extends State<BalanceScreen> {
+class _LiveScreenState extends State<LiveScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Balance"),
+        title: Text("Live"),
         centerTitle: true,
       ),
       body: Container(

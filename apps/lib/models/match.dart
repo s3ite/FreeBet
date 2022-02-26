@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MatchDetailScreen extends StatelessWidget {
+class MatchInfo {
   final String sport;
   final String leagueName;
   final String id;
@@ -14,7 +14,7 @@ class MatchDetailScreen extends StatelessWidget {
   final double oddDraw;
   final double oddAway;
 
-  MatchDetailScreen({
+  MatchInfo({
     required this.sport,
     required this.leagueName,
     required this.id,
@@ -26,14 +26,4 @@ class MatchDetailScreen extends StatelessWidget {
     required this.oddDraw,
     required this.oddAway,
   });
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Detail du match")),
-      body: Center(
-        child: const Text("Coming soon"),
-      ),
-    );
-  }
 }

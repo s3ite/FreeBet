@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import './odd.dart';
 import './screens/home_screen.dart';
 
 void main() {
