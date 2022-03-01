@@ -14,27 +14,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int currentIndex = 0;
-  final screens = [];
-
   void goToBalance(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) {
-          return BalanceScreen();
-        },
-      ),
-    );
+    Navigator.of(context).pushNamed('./balance-screen');
   }
 
   void goToUser(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) {
-          return UserScreen();
-        },
-      ),
-    );
+    Navigator.of(context).pushNamed('./user-screen');
   }
 
   @override
@@ -42,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(255, 0, 0, 1),
-        centerTitle: true,
         title: const Text(
           "Freebet",
           textAlign: TextAlign.center,
@@ -94,30 +78,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       backgroundColor: Colors.black,
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.green,
-        showUnselectedLabels: false,
-        currentIndex: currentIndex,
-        onTap: (index) => setState(() => currentIndex = index),
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.sports_soccer),
-              label: 'Home',
-              backgroundColor: Colors.black),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.live_tv),
-              label: 'Live',
-              backgroundColor: Colors.black),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.sports_sharp),
-              label: 'Result',
-              backgroundColor: Colors.black),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.checklist_rtl_sharp),
-              label: 'Selection',
-              backgroundColor: Colors.black)
-        ],
-      ),
     );
   }
 }

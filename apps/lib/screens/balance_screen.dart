@@ -6,6 +6,14 @@ class BalanceScreen extends StatefulWidget {
 }
 
 class _BalanceScreenState extends State<BalanceScreen> {
+  void goToBalance(BuildContext context) {
+    Navigator.of(context).pushNamed('./balance-screen');
+  }
+
+  void goToUser(BuildContext context) {
+    Navigator.of(context).pushNamed('./user-screen');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -4,20 +4,13 @@ import 'package:flutter/rendering.dart';
 
 //Personnal import
 import '../screens/match_detail_screen.dart';
-import '../screens/selection_screen.dart' as selection;
 
-enum TeamSelection {
-  homeSelection,
-  drawSelection,
-  awaySelection,
-}
-
-class MatchItem extends StatelessWidget {
+class MatchItemSelection extends StatelessWidget {
   final String sport;
   final String leagueName;
   final String id;
   final String startDate;
-  final bool isLive;
+  final bool isLive; //false
 
   final String homeTeam;
   final String awayTeam;
@@ -26,7 +19,7 @@ class MatchItem extends StatelessWidget {
   final double oddDraw;
   final double oddAway;
 
-  MatchItem({
+  MatchItemSelection({
     required this.sport,
     required this.leagueName,
     required this.id,
@@ -46,17 +39,13 @@ class MatchItem extends StatelessWidget {
       'leagueName': leagueName,
       'id': id,
       'startDate': startDate,
-      'isLive': isLive,
+      'isLive': false, //On ne peut pas parier sur un match en live
       'homeTeam': homeTeam,
       'awayTeam': awayTeam,
       'oddHome': oddHome,
       'oddAway': oddAway,
       'oddDraw': oddDraw
     });
-  }
-
-  addToBet(String id, TeamSelection select) {
-    selection.SelectionScreen.addMatch(id, select.toString());
   }
 
   @override
@@ -138,20 +127,17 @@ class MatchItem extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 1,
-                  child: InkWell(
-                    onTap: () => addToBet(id, Selection.homeSelection),
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Colors.grey,
-                      ),
-                      child: Text(
-                        oddDraw.toString(),
-                        textAlign: TextAlign.center,
-                        textScaleFactor: 0.8,
-                      ),
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.grey,
+                    ),
+                    child: Text(
+                      oddDraw.toString(),
+                      textAlign: TextAlign.center,
+                      textScaleFactor: 0.8,
                     ),
                   ),
                 ),
