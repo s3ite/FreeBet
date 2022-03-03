@@ -1,15 +1,20 @@
+import 'dart:html';
+
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class User {
   final String userName;
-  final String mailAdress;
-  final String mobileNumber;
-  final int age;
-  final double freebet;
+  final String pseudo;
+  String mailAdress;
+  String mobileNumber;
+  int age;
+  double freebet;
   final String accountCreationDate;
 
   User(
       {required this.userName,
+      required this.pseudo,
       required this.mailAdress,
       required this.mobileNumber,
       required this.age,

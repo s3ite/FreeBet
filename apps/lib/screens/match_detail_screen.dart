@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../items/top_bar.dart';
+
 class MatchDetailScreen extends StatelessWidget {
   void goToBalance(BuildContext context) {
     Navigator.of(context).pushNamed('./balance-screen');
@@ -27,39 +29,11 @@ class MatchDetailScreen extends StatelessWidget {
     final oddAway = routeArgs['oddAway'];
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromRGBO(255, 0, 0, 1),
-        title: const Text(
-          "LiveScreen",
-          textAlign: TextAlign.center,
+      appBar: TopBar(
+        title: Text(
+          "Match",
         ),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.menu,
-          ),
-          onPressed: () {
-            /*DropdownButton*/
-          },
-        ),
-        actions: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              onTap: () => goToBalance(context),
-              child: Icon(
-                Icons.attach_money,
-                size: 26.0,
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              onTap: () => goToUser(context),
-              child: Icon(Icons.account_circle_outlined),
-            ),
-          ),
-        ],
+        appBar: AppBar(),
       ),
       body: Center(
         child: const Text("Coming soon"),

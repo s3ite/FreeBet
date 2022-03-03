@@ -1,10 +1,9 @@
-import 'package:apps/items/odd_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 //Personnal import
 import '../screens/match_detail_screen.dart';
-import '../screens/selection_screen.dart' as selection;
+import './match_item_selection.dart';
+import '../screens/selection_screen.dart';
 
 enum TeamSelection {
   homeSelection,
@@ -55,8 +54,22 @@ class MatchItem extends StatelessWidget {
     });
   }
 
-  addToBet(String id, TeamSelection select) {
-    selection.SelectionScreen.addMatch(id, select.toString());
+  addToBet(MatchItem matchItem, TeamSelection selected) {
+    double oddTeamSelected = 0;
+    if (selected == TeamSelection.homeSelection)
+      oddTeamSelected = oddHome;
+    else if (selected == TeamSelection.drawSelection)
+      oddTeamSelected = oddDraw;
+    else if (selected == TeamSelection.awaySelection) oddTeamSelected = oddAway;
+
+    SelectionScreen.addMatch(MatchItemSelection(
+        sport: sport,
+        leagueName: leagueName,
+        id: id,
+        startDate: startDate,
+        homeTeam: homeTeam,
+        awayTeam: awayTeam,
+        oddTeamSelected: oddTeamSelected));
   }
 
   @override
@@ -118,15 +131,13 @@ class MatchItem extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: InkWell(
-                    onTap: () => goToMatch(context),
-                    splashColor: Color.fromARGB(255, 0, 0, 0),
-                    borderRadius: BorderRadius.circular(5),
+                    onTap: () => addToBet(this, TeamSelection.homeSelection),
                     child: Container(
                       padding: EdgeInsets.all(10),
                       margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: Colors.blue,
+                        color: Colors.grey,
                       ),
                       child: Text(
                         oddHome.toString(),
@@ -139,7 +150,7 @@ class MatchItem extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: InkWell(
-                    onTap: () => addToBet(id, Selection.homeSelection),
+                    onTap: () => addToBet(this, TeamSelection.drawSelection),
                     child: Container(
                       padding: EdgeInsets.all(10),
                       margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
@@ -157,17 +168,20 @@ class MatchItem extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 1,
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.red,
-                    ),
-                    child: Text(
-                      oddAway.toString(),
-                      textAlign: TextAlign.center,
-                      textScaleFactor: 0.8,
+                  child: InkWell(
+                    onTap: () => addToBet(this, TeamSelection.awaySelection),
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.grey,
+                      ),
+                      child: Text(
+                        oddAway.toString(),
+                        textAlign: TextAlign.center,
+                        textScaleFactor: 0.8,
+                      ),
                     ),
                   ),
                 ),

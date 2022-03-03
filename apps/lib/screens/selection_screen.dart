@@ -1,18 +1,39 @@
+import 'dart:ffi';
+
+import 'package:apps/sample_data.dart';
 import 'package:flutter/material.dart';
 
 import '../models/matchdetail.dart';
 import '../items/match_item_selection.dart';
+import '../items/match_item.dart';
+
+import '../items/top_bar.dart';
+import '../custom_form.dart';
+
+double _gainsPotentiels = 0;
 
 class SelectionScreen extends StatefulWidget {
-  static List<String> _idMatch = [];
+  static List<Widget> matchSelected = [];
 
-  static addMatch(String id, String TeamSelected) {
-    if (_idMatch.contains(id)) {
-      print("Not added"); //////================================
-      return;
+  static addMatch(MatchItemSelection matchItem) {
+    if (matchSelected.contains(matchItem) == false) {
+      print("Not Present, so added");
+      matchSelected.add(matchItem);
+    } else {
+      print("Already Present");
     }
-    _idMatch.add(id);
-    print("Added"); //////================================
+  }
+
+  static deleteMatch(MatchItemSelection matchItem) {
+    matchSelected.remove(matchItem);
+  }
+
+  static deleteAllMatch() {
+    matchSelected = [];
+  }
+
+  static getAmountBet(double value) {
+    _gainsPotentiels = value;
   }
 
   @override
@@ -20,55 +41,52 @@ class SelectionScreen extends StatefulWidget {
 }
 
 class _SelectionScreenState extends State<SelectionScreen> {
-  void goToBalance(BuildContext context) {
-    Navigator.of(context).pushNamed('./balance-screen');
+  double _totalOdds = 0;
+
+  double getOdds() {
+    int len = SelectionScreen.matchSelected.length;
+    _totalOdds = 1;
+    for (int i = 0; i < len; i++) {
+      _totalOdds *= (SelectionScreen.matchSelected[i] as MatchItemSelection)
+          .oddTeamSelected;
+    }
+    return _totalOdds;
   }
 
-  void goToUser(BuildContext context) {
-    Navigator.of(context).pushNamed('./user-screen');
+  double computePotentialEarn() {
+    return _totalOdds * 5;
+  }
+
+  void refreshPage() {
+    setState(() {
+      _totalOdds = getOdds();
+      _gainsPotentiels = computePotentialEarn();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromRGBO(255, 0, 0, 1),
-        title: const Text(
-          "Selection",
-          textAlign: TextAlign.center,
-        ),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.menu,
-          ),
-          onPressed: () {
-            /*DropdownButton*/
-          },
-        ),
-        actions: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              onTap: () => goToBalance(context),
-              child: Icon(
-                Icons.attach_money,
-                size: 26.0,
+      appBar: TopBar(
+        title: const Text("Selection"),
+        appBar: AppBar(),
+      ),
+      body: ListView(
+        children: <Widget>[
+          Column(children: SelectionScreen.matchSelected),
+          MyCustomForm(),
+          Column(
+            children: [
+              Text("Total odd = $_totalOdds", textAlign: TextAlign.center),
+              Text("Potential earn = $_gainsPotentiels",
+                  textAlign: TextAlign.center),
+              ElevatedButton(
+                onPressed: refreshPage,
+                child: Text("Confirm"),
               ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              onTap: () => goToUser(context),
-              child: Icon(Icons.account_circle_outlined),
-            ),
+            ],
           ),
         ],
-      ),
-      body: Container(
-        child: Center(
-          child: Text("Coming soon"),
-        ),
       ),
     );
   }

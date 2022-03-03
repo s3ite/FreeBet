@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../items/top_bar.dart';
+
 class BalanceScreen extends StatefulWidget {
+  //double amountAvaible;
+
+  //BalanceScreen(this.amountAvaible);
+
   @override
   _BalanceScreenState createState() => _BalanceScreenState();
 }
@@ -17,9 +23,11 @@ class _BalanceScreenState extends State<BalanceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Balance"),
-        centerTitle: true,
+      appBar: TopBar(
+        title: Text(
+          "Balance",
+        ),
+        appBar: AppBar(),
       ),
       body: Container(
         child: Center(
