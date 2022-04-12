@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 //screens
-import 'package:freebet/screens/home_screen.dart';
+import 'screens/home_screen.dart';
+import 'screens/basket_screen.dart';
 
 //providers
-import './providers/match_item_provider.dart';
+import 'providers/matchitem_provider.dart';
+import 'providers/basketselection_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -14,9 +16,20 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => MatchItemProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: MatchItemProvider(),
+        ),
+        ChangeNotifierProvider.value(
+          value: BasketSelectionProvider(),
+        ),
+      ],
       child: MaterialApp(
+          routes: {
+            './home-screen': (context) => HomeScreen(),
+            './basket-screen': (context) => BasketScreen(),
+          },
           title: 'Flutter Demo',
           theme: ThemeData(
             primarySwatch: Colors.red,

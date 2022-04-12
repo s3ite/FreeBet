@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 class MatchInfo {
   final String sport;
@@ -14,6 +16,10 @@ class MatchInfo {
   double oddAway;
   bool isLive;
 
+  Color colorOddHome;
+  Color colorOddAway;
+  Color colorOddDraw;
+
   MatchInfo(
       {required this.sport,
       required this.leagueName,
@@ -24,5 +30,8 @@ class MatchInfo {
       required this.oddHome,
       this.oddDraw = 0,
       required this.oddAway,
-      this.isLive = false});
+      this.isLive = false,
+      this.colorOddHome = Colors.grey,
+      this.colorOddAway = Colors.grey,
+      this.colorOddDraw = Colors.grey});
 }

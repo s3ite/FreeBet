@@ -1,21 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:freebet/models/match.dart';
+import 'package:provider/provider.dart';
 
-enum TeamSelection {
-  homeSelection,
-  drawSelection,
-  awaySelection,
-}
+import '../providers/basketselection_provider.dart';
 
-class MatchItem extends StatelessWidget {
+class BasketSelectionMatchItem extends StatelessWidget {
   final MatchInfo match;
 
-  MatchItem({required this.match});
-
-  //Function to change page
-  void goToMatch(BuildContext context) {
-    Navigator.of(context).pushNamed('./details-match', arguments: {});
-  }
+  BasketSelectionMatchItem({required this.match});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +25,8 @@ class MatchItem extends StatelessWidget {
         child: Column(
           children: <Widget>[
             InkWell(
-              onTap: () => goToMatch(context),
+              onTap: () =>
+                  {}, //Supprimer la bouton et mettre un rectangle static
               child: Row(
                 children: [
                   Expanded(
@@ -82,7 +75,7 @@ class MatchItem extends StatelessWidget {
                       margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: Colors.grey,
+                        color: match.colorOddHome,
                       ),
                       child: Text(
                         match.oddHome.toString(),
@@ -101,7 +94,7 @@ class MatchItem extends StatelessWidget {
                       margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: Colors.grey,
+                        color: match.colorOddDraw,
                       ),
                       child: Text(
                         match.oddDraw.toString(),
@@ -120,7 +113,7 @@ class MatchItem extends StatelessWidget {
                       margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: Colors.grey,
+                        color: match.colorOddAway,
                       ),
                       child: Text(
                         match.oddAway.toString(),
